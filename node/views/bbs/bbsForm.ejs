@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>bbsForm</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      $("#btnCreate").click(function () {
+          // 등록
+          $.ajax({
+              dataType: "json"
+            , method: "post"
+            , data: $("#bbsForm").serialize()
+            , url: "/bbs"
+            , success: function (result) {
+              alert(JSON.stringify(result));
+              location.href = "/bbs";
+            }
+            , error: function (jqXHR, textStatus, errorThrown) {
+              alert("Error!");
+              console.log(JSON.stringify(jqXHR));
+              console.log(JSON.stringify(textStatus));
+              console.log(JSON.stringify(errorThrown));
+            }
+          });
+      });
+
+      $("#btnEdit").click(function () {
+        // 수정
+        $.ajax({
+            dataType: "json"
+          , method: "put"
+          , data: $("#bbsForm").serialize()
+          , url: "/bbs/" + $("#bbsId").val()
+          , success: function (result) {
+            alert(JSON.stringify(result));
+            location.href = "/bbs";
+          }
+          , error: function (jqXHR, textStatus, errorThrown) {
+            alert("Error!");
+            console.log(JSON.stringify(jqXHR));
+            console.log(JSON.stringify(textStatus));
+            console.log(JSON.stringify(errorThrown));
+          }
+        });
+      });
+
+      $("#btnRemove").click(function () {
+        // 삭제
+        if (confirm("삭제하시겠습니까?")) {
+          $.ajax({
+              dataType: "json"
+            , method: "delete"
+            , data: $("#bbsForm").serialize()
+            , url: "/bbs/" + $("#bbsId").val()
+            , success: function (result) {
+              alert(JSON.stringify(result));
+              location.href = "/bbs";
+            }
+            , error: function (jqXHR, textStatus, errorThrown) {
+              alert("Error!");
+              console.log(JSON.stringify(jqXHR));
+              console.log(JSON.stringify(textStatus));
+              console.log(JSON.stringify(errorThrown));
+            }
+          });
+        }
+      });
+    });
+    </script>
+</head>
+
+<body>
+
+<form name="bbsForm" id="bbsForm">
+  <% if (result != undefined) {
+     } else {
+      result = {
+          bbsId: 0
+        , bbsUser: ''
+        , bbsTitle: ''
+        , bbsContent: ''
+      };
+     } %>
+
+  <div id="editArea">
+    <ul>
+       <li>
+         <label for="bbsId">글번호</label>
+         <span><%= result.bbsId %></span>
+         <input type="hidden" id="bbsId" name="bbsId" value="<%= result.bbsId %>" />
+       </li>
+       <li>
+         <label for="bbsUser">등록자</label>
+         <input type="text" id="bbsUser" name="bbsUser" value="<%= result.bbsUser %>" />
+       </li>
+       <li>
+         <label for="bbsTitle">제목</label>
+         <input type="text" id="bbsTitle" name="bbsTitle" value="<%= result.bbsTitle %>" />
+       </li>
+       <li>
+         <label for="bbsContent">내용</label>
+         <input type="text" id="bbsContent" name="bbsContent" value="<%= result.bbsContent %>" />
+       </li>
+    </ul>
+  </div>
+
+  <div id="btnArea">
+    <% if (result.bbsId > 0) { %>
+        <input type="button" id="btnEdit" value="수정" />
+        <input type="button" id="btnRemove" value="삭제" />
+    <% } else { %>
+      <input type="button" id="btnCreate" value="등록" />
+    <% } %>
+  </div>
+
+</form>
+
+</body>
+</html>

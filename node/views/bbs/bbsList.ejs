@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>bbsList</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $("#btnCreate").click(function() {
+        location.href = "/bbs/0/form";
+      });
+    });
+
+    function viewDetail(bbsId) {
+      alert(bbsId);
+      location.href = "/bbs/" + bbsId;
+    }
+    </script>
+</head>
+
+<body>
+  <div>
+      <ul>
+        <li>글번호</li>
+        <li>등록자</li>
+        <li>제목</li>
+        <li>조회수</li>
+        <li>등록일</li>
+      </ul>
+      <% for(var i = 0; i < result.length; i++) {%>
+        <a href="javascript:viewDetail('<%= result[i].bbsId %>');">
+          <ul>
+             <li><%= result[i].bbsId %></li>
+             <li><%= result[i].bbsTitle %></li>
+             <li><%= result[i].bbsUser %></li>
+             <li><%= result[i].bbsCount %></li>
+             <li><%= result[i].bbsRegDate %></li>
+          </ul>
+        </a>
+      <% } %>
+  </div>
+
+  <div>
+    <input type="button" id="btnCreate" value="등록" />
+  </div>
+
+</body>
+</html>
