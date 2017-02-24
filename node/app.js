@@ -26,7 +26,7 @@ var app = express();
 
 
 mongoose.connect(
-  config.mongodbUri
+  config.mongodb
   , {
     server: {
       socketOptions: {
