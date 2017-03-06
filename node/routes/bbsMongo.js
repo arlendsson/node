@@ -19,8 +19,8 @@ var bbsSchema = mongoose.Schema({
   , bbsUser: String
   , bbsTitle: String
   , bbsContent: String
-  , bbsRegDate: {type: Date, default: Date.now}
-  , bbsModDate: {type: Date, default: Date.now}
+  , bbsRegDate: {type: Date}
+  , bbsModDate: {type: Date}
   , bbsUseYn: {type : Boolean, default: true}
   , bbsCount: {type: Number, default: 0}
 });
